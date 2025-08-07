@@ -6,7 +6,7 @@ A dex is free programmatically generated website. Dexs are used to put research 
 pip install dexweb
 ```
 
-[Documentation](https://matrixdex.github.io/dexweb)is a dex. Meta we know!
+[Documentation](https://matrixdex.github.io/dexweb) is a dex. Meta we know!
 
 
 
@@ -21,5 +21,6 @@ Dependencies:
 
 
 ## License
+
 
 This project is released under the Creative Commons Zero license.
