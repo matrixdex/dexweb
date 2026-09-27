@@ -1,4 +1,4 @@
-## DEXWEB v4.1.8
+## DEXWEB v4.1.9
 
 Dexweb builds you a dex to put on the web. Dexweb generates a website from PDF, Powerpoint, document, text, and JSON files.
 
