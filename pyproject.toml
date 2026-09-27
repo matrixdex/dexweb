@@ -4,7 +4,7 @@ build-backend = "hatchling.build"
 
 [project]
 name = "dexweb"
-version = "4.1.8"
+version = "4.1.9"
 dependencies = [
   "pypdf",
   "importlib_resources",

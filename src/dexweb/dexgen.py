@@ -342,7 +342,10 @@ class Dexgen:
         for i in json_data:
             if i['title'] in complete.keys():
                 for k in i['body']:
-                    complete[i['title']].append(k)
+                    # adds unique lines only to consolidated json of previous data.json + dummy.json
+                    # add unique lines constraint fixes duplication addition of records on links already in old page object
+                    if k not in complete[i['title']]:
+                        complete[i['title']].append(k)
             else:
                 complete[i['title']]=i['body']
         p=[]
