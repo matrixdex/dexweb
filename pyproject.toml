@@ -4,7 +4,7 @@ build-backend = "hatchling.build"
 
 [project]
 name = "dexweb"
-version = "4.1.6"
+version = "4.1.8"
 dependencies = [
   "pypdf",
   "importlib_resources",
@@ -21,6 +21,13 @@ classifiers = [
     "Programming Language :: Python :: 3",
     "License :: CC0 1.0 Universal (CC0 1.0) Public Domain Dedication",
     "Operating System :: OS Independent",
+    "Programming Language :: Python :: 3.8",
+    "Programming Language :: Python :: 3.9",
+    "Programming Language :: Python :: 3.10",
+    "Programming Language :: Python :: 3.11",
+    "Programming Language :: Python :: 3.12",
+    "Programming Language :: Python :: 3.13",
+    "Programming Language :: Python :: 3.14",
 ]
 
 [project.urls]

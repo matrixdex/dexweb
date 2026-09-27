@@ -1,12 +1,13 @@
 body {
   background-color: black;
-  color: rgb(220, 220, 220)
+  color: rgb(220, 220, 220);
+  padding: 0px 100px;
 }
 h1 {
   color: rgb(240, 240, 240); font-family:monospace; text-align: center; font-size: 2.5rem;
 }
 p,ul,ol {
-  color: rgb(240, 240, 240); font-family:arial; font-size: 18px; letter-spacing: 0.05em;
+  color: rgb(240, 240, 240); font-family:arial; font-size: 20px; letter-spacing: 0.05em;
 }
 table {
   color: rgb(220, 220, 220); font-family:arial; font-size: 0.9em; letter-spacing: 0.05em;
@@ -21,13 +22,24 @@ a {
 a:hover {
   text-decoration: underline;
 }
-body {
-  padding: 0px 100px;
-}
 .indexlink {
-  color: rgb(240, 240, 240); font-family:arial; font-size: 18px; letter-spacing: 0.05em; padding: 5px 0px;
+  color: rgb(240, 240, 240); font-family:arial; font-size: 20px; letter-spacing: 0.05em; padding: 0px 0px;
 }
-
+img {
+    display: block;
+    max-height: 100%;
+    max-width: 80%;
+    margin: auto;
+}
+.ulink:hover {
+  text-decoration: none;
+}
+@media screen and (max-width: 800px) {
+  
+  img {
+    max-width: 100%;
+}
+}
 @media screen and (max-width: 600px) {
   body {
     padding: 0px 20px

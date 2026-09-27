@@ -158,9 +158,9 @@ class Dexgen:
                 if self.index_list_no_page_link_only == True:
                     if len(c) == 1 and c[0][0:2]=='<a' and c[0][-4:] == "</a>":
                         q=c[0]
-                        k+="<div class='indexlink'><p><a href='"+q[q.index('=')+2:q.index('>')-1]+"'>"+pages[i]['title']+'</a> ('+q[q.index('>')+1:q.index('</a>')]+')</p></div>'
+                        k+="<div class='indexlink'><a href='"+q[q.index('=')+2:q.index('>')-1]+"'>"+pages[i]['title']+'</a> ('+q[q.index('>')+1:q.index('</a>')]+')</div>'
                     else:
-                         k+="<div class='indexlink'><p><a href="+pages[i]['html_title']+".html>"+pages[i]['title']+'</a>'+' ('+b+')'+'</p></div>'
+                         k+="<div class='indexlink'><a href="+pages[i]['html_title']+".html>"+pages[i]['title']+'</a>'+' ('+b+')'+'</div>'
                 else:
                     k+="<div class='indexlink'><p><a href="+pages[i]['html_title']+".html>"+pages[i]['title']+'</a>'+' ('+b+')'+'</p></div>'
         if self.index_template == None:
