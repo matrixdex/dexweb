@@ -87,9 +87,10 @@ class Dexgen:
                             file.write(favicon)
                 if i=='backup':
                     if 'data.json' not in os.listdir(root):
-                        print("No dex found. Input name of dex: ", end='')
+                        print("ERROR: No existing dex found\nInput dex name: (leave blank for The Matrix Dex)\n", end='')
                         dexname=input()
                         self.dexname=dexname.title()
+                        
                         self.create_first_json_file(root, self.dexname)
                         self.create_first_json_file(os.path.join(root,i), self.dexname)
                         if 'config.json' not in os.listdir(root):
@@ -387,43 +388,50 @@ class Dexgen:
         return old
 
     def create_first_json_file(self, path, dexname):
-        indexlink='''<a href="index.html">'''+dexname+'''</a>'''
-        z=[
-        {
-            "title": "Sample Page 1",
-            "body": [
-                "This is a sample page. This page is named 'samplepage1.html' in the "+indexlink+" Dex and found in /gen folder. Pages like <a href='samplepage2.html'>Sample Page 2</a> are hyperlinked using human intervention. Automatic search and hyperlink using simple document search will be embedded later.",
-                "Each string in 'body' object of 'data.json', also called <a href='jsonintermediate.html'>JSON intermediate</a>, is a paragraph. JSON intermediate is further explained in the link above.",
-                "Link colors and limited stylistic features of this website can be edited in'styles.css' file in the codebase.",
-                "'Favicon.ico' file in /assets folder in codebase is the icon for this website."
+        if (len(dexname)!=0):
+            indexlink='''<a href="index.html">'''+dexname+'''</a>'''
+            z=[
+            {
+                "title": "Sample Page 1",
+                "body": [
+                    "This is a sample page. This page is named 'samplepage1.html' in the "+indexlink+" Dex and found in /gen folder. Pages like <a href='samplepage2.html'>Sample Page 2</a> are hyperlinked using human intervention. Automatic search and hyperlink using simple document search will be embedded later.",
+                    "Each string in 'body' object of 'data.json', also called <a href='jsonintermediate.html'>JSON intermediate</a>, is a paragraph. JSON intermediate is further explained in the link above.",
+                    "Link colors and limited stylistic features of this website can be edited in'styles.css' file in the codebase.",
+                    "'Favicon.ico' file in /assets folder in codebase is the icon for this website."
+                ]
+            },
+            {
+                "title": "Sample Page 2",
+                "body": [
+                    "This is sample page 2 in the dex."
+                ]
+            },
+            {
+                "title": "JSON intermediate",
+                "body": [
+                    "JSON intermediate file named 'data.json' is created in the dex codebase. 'Data.json' is constructed with raw text, PDF and PPTX files added to '/raw' folder in the dex codebase. Make document edits in this JSON intermediate. This raw data file is used as input to generate HTML pages for each item in this list, along with an index page that links to all generated pages."
+                ]
+            },
+            {
+                "title": "Contact",
+                "body": [
+                    "Contact <a href='manonthemoon13131@gmail.com'>manonthemoon13131@gmail.com</a> to manage your dex website.",
+                    "The Matrix codebase is listed on GitHub <a href='https://github.com/orgs/matrixdex/repositories'>here</a>."
+                ]
+            },
+            {
+                "title": "Hosting",
+                "body": ["GitHub allows free hosting through GitHub pages. Simply create a repository in your account and add all files in the dex folder to that repository. Deploy a website using GitHub pages using 'index.html' in the 'dex' folder as entry point."]
+            }
             ]
-        },
-        {
-            "title": "Sample Page 2",
-            "body": [
-                "This is sample page 2 in the dex."
-            ]
-        },
-        {
-            "title": "JSON intermediate",
-            "body": [
-                "JSON intermediate file named 'data.json' is created in the dex codebase. 'Data.json' is constructed with raw text, PDF and PPTX files added to '/raw' folder in the dex codebase. Make document edits in this JSON intermediate. This raw data file is used as input to generate HTML pages for each item in this list, along with an index page that links to all generated pages."
-            ]
-        },
-        {
-            "title": "Contact",
-            "body": [
-                "Contact <a href='manonthemoon13131@gmail.com'>manonthemoon13131@gmail.com</a> to manage your dex website.",
-                "The Matrix codebase is listed on GitHub <a href='https://github.com/orgs/matrixdex/repositories'>here</a>."
-            ]
-        },
-        {
-            "title": "Hosting",
-            "body": ["GitHub allows free hosting through GitHub pages. Simply create a repository in your account and add all files in the dex folder to that repository. Deploy a website using GitHub pages using 'index.html' in the 'dex' folder as entry point."]
-        }
-        ]
-        with open(os.path.join(path,'data.json'),'w+') as file:
-            file.write(json.dumps(z, indent=4))
+            with open(os.path.join(path,'data.json'),'w+') as file:
+                file.write(json.dumps(z, indent=4))
+        else:
+            self.dexname = 'The Matrix'
+            root=os.getcwd()
+            ref_data = importlib_resources.files("dexweb").joinpath("thematrix.json").read_text()
+            with open(os.path.join(root,"data.json"), "w+") as file:
+                file.write(ref_data)
 
     def update_json_data(self,old_path,updates):
         with open(old_path, 'r') as f:
@@ -458,42 +466,12 @@ class Dexgen:
         config_json = {
                 "dexname": self.dexname,
                 "author": "Dexgen",
-                "index_template": """<html lang='en'>
-                        <head>
-                            <meta charset='UTF-8'>
-                            <meta name='viewport' content='width=device-width, initial-scale=1.0'>
-                            <link rel='shortcut icon' type='image/x-icon' href='assets/favicon.ico'>
-                            <link rel='stylesheet' href='styles.css'>
-                            <title>{} Dex</title>
-                        </head>
-                        <body>
-                            <br><h1>{} DEX</h1><br>
-                            {}
-                            <br><br><br><br><br><br><br>
-                            <h3><a href='index.html'>{} DEX</a></h3>
-                        </body>
-                        </html>""",
-                "page_template": """<html lang='en'>
-                        <head>
-                            <meta charset='UTF-8'>
-                            <meta name='viewport' content='width=device-width, initial-scale=1.0'>
-                            <link rel='shortcut icon' type='image/x-icon' href='assets/favicon.ico'>
-                            <link rel='stylesheet' href='styles.css'>
-                            <title>{} - {} Dex</title>
-                        </head>
-                        <body>
-                        <br>
-                        <h1>{}</h1>
-                        <br>
-                        {}
-                        <br><br><br><br><br><br><br>
-                        <h3><a href='index.html'>{} DEX</a></h3>
-                    </body>
-                    </html>""",
+                "index_template": """<html lang='en'>\n                        <head>\n                            <meta charset='UTF-8'>\n                            <meta name='viewport' content='width=device-width, initial-scale=1.0'>\n                            <link rel='shortcut icon' type='image/x-icon' href='assets/favicon.ico'>\n                            <link rel='stylesheet' href='styles.css'>\n                            <title>{} Dex</title>\n                        </head>\n                        <body>\n                            <br><h1>{} DEX</h1><br>\n                            {}\n                            <br><br><br><br><br><br><br>\n                            <h3><a href='index.html'>{} DEX</a></h3>\n                        </body>\n                        </html>""",
+                "page_template": "<html lang='en'>\n                        <head>\n                            <meta charset='UTF-8'>\n                            <meta name='viewport' content='width=device-width, initial-scale=1.0'>\n                            <link rel='shortcut icon' type='image/x-icon' href='assets/favicon.ico'>\n                            <link rel='stylesheet' href='styles.css'>\n                            <title>{} - {} Dex</title>\n                        </head>\n                        <body>\n                        <br>\n                        <h1>{}</h1>\n                        <br>\n                        {}\n                        <br><br><br><br><br><br><br>\n                        <h3><a href='index.html'>{} DEX</a></h3>\n                    </body>\n                    </html>",
                     "page_javascript": "",
                     "index_javascript": "",
-                    "index_list_type_para": False,
-                    "index_list_no_page_link_only": True
+                    "index_list_type_para": True,
+                    "index_list_no_page_link_only": False
             }
         with open(os.path.join(path,'config.json'), 'w+') as file:
             file.write(json.dumps(config_json, indent=4))
