@@ -1,4 +1,4 @@
-## DEXWEB v4.1.9
+## DEXWEB v4.2.0
 
 Dexweb builds you a dex to put on the web. Dexweb generates a website from PDF, Powerpoint, document, text, and JSON files.
 
@@ -22,7 +22,7 @@ Dependencies:
 
 ### Version Log:
 
-v4.2.0 - Adds The Matrix Dex as dex generated on blank dex name input
+v4.2.0 - Adds The Matrix Dex as dex generated on blank dex name input\
 v4.1.9 - Fixed duplicate additions to existing page objects when adding new files in /to_add folder
 
 
