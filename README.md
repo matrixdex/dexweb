@@ -8,7 +8,7 @@ A dex is free programmatically generated website. Dexs are used to put research 
 pip install dexweb
 ```
 
-[Documentation](https://matrixdex.github.io/dexweb)is a dex. Meta we know!
+[Documentation](https://matrixdex.github.io/dexweb) is a dex. Meta we know!
 
 
 
@@ -18,6 +18,12 @@ Dependencies:
 - beautifulsoup4==4.12.3
 - mammoth==1.8.0
 - importlib_resources
+
+
+### Version Log:
+
+v4.2.0 - Adds The Matrix Dex as dex generated on blank dex name input
+v4.1.9 - Fixed duplicate additions to existing page objects when adding new files in /to_add folder
 
 
 
