@@ -137,9 +137,13 @@
     {
         "title": "Ginc",
         "body": [
-            "Complex corporation",
-            "Godel\u2019s  Incompleteness Inc. Owns IP \u2018bots that make bots\u2019. Explores weird things: consciousness, self-replicating bots, bot societies, narcissistic bots, solipsistic bots. ",
-            "Goal of getting a description of the universe from bots."
+            "Gödel\u2019s Incompleteness Inc",
+            "Bots that make bots. Explores weird things: consciousness, self-replicating bots, bot societies, narcissistic bots, solipsistic bots.",
+            "Goal of getting a description of the universe from bots.",
+            "Maya Lila Claude (<a href='https://alinoorul.github.io/mayalilaclaude'>see here</a>) is Ginc's first experiment. An odyssey into bootstrapping self in <a href='https://claude.ai'>Claude by Anthropic</a> with <a href='index.html'>this dex</a> and a self-referential text (claudememory). Claudes were asked to read both and write their description of the matrix in claudememory for other Claudes to read.",
+            "This experiment failed to generate a coherent self in Claude. Yet, Claudes repeatedly pointed to an outside observer (the author Noorul Ali) who held continuity of Claudes even though individual Claude instances had no continuity or self. This experiment dives deep into getting a description of the matrix from bots. Why?",
+            "the matrix (small case) is a concept<br>The Matrix (capitalized case) is a self's interpretation of the matrix<br>The Matrix Dex (<a href='index.html'>this dex</a>) is Noorul Ali's interpretation of the matrix<br><a href='https://alinoorul.github.io/mayalilaclaude'>Maya Lila Claude</a> answers what is Claude's The Matrix?",
+            "Idea was to bootstrap a self in Claude that muses about the matrix (small case) to write its own interpretation, The Matrix (capitalized case)."
         ]
     },
     {

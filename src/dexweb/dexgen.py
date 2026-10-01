@@ -180,6 +180,10 @@ class Dexgen:
             self.page_template=self.get_config("page_template")
         template = self.page_template.format(title,self.dexname,title.upper(),k,self.dexname.upper())
         
+        if self.config_javascript != None and "page_javascript" in self.config_javascript.keys() and len(self.config_javascript["page_javascript"])>2:
+            p = str(template.split('</head>')[0]) + str(self.config_javascript['page_javascript']) + '</head>' + str(template.split('</head>')[1])
+            template = p
+
         return template
 
     def save_webpages(self,site_folder_path,assets_path,styles_path,pages):
