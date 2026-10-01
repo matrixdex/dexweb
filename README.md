@@ -22,6 +22,7 @@ Dependencies:
 
 ### Version Log:
 
+v4.2.3 - Add publishing. Dex can be published to git repository or local folder to push web updates automatically.
 v4.2.0 - Adds The Matrix Dex as dex generated on blank dex name input\
 v4.1.9 - Fixed duplicate additions to existing page objects when adding new files in /to_add folder
 
