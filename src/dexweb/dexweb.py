@@ -1,4 +1,4 @@
-import os, json, shutil, subprocess, datetime
+import os, sys, stat, json, shutil, subprocess, datetime
 
 #Web services for dex
 class Dexweb:
@@ -15,6 +15,7 @@ class Dexweb:
     def publish(self):
         p = self.config.get('publish')
         if not isinstance(p, dict):
+            self.remove_publish_copy()
             print('no publish obj, dex not published')
             return False
         if not os.path.isdir(self.site_folder_path) or not os.listdir(self.site_folder_path):
@@ -24,6 +25,7 @@ class Dexweb:
         if method == 'git':
             return self.publish_git(p)
         if method == 'folder':
+            self.remove_publish_copy()
             return self.publish_folder(p)
         print('unknown publish method "' + str(method) + '" in config')
         return False
@@ -38,6 +40,21 @@ class Dexweb:
         shutil.copytree(self.site_folder_path, target, dirs_exist_ok=True)
         print('dex published to ' + target)
         return True
+        # .publish/ is dexweb's own copy of the repository in "dest". config.json is the truth:
+    # remove the copy when config.json no longer publishes to that repository
+    def remove_publish_copy(self):
+        work = os.path.join(os.getcwd(), '.publish')
+        if not os.path.isdir(work):
+            return
+        def unlock(func, path, exc):
+            # git makes some files read-only (on Windows)
+            os.chmod(path, stat.S_IWRITE)
+            func(path)
+        if sys.version_info >= (3, 12):
+            shutil.rmtree(work, onexc=unlock)
+        else:
+            shutil.rmtree(work, onerror=unlock)
+        print('publish: removed .publish/, it no longer matches config.json')
 
     def run_git(self, repo, *args):
         try:
@@ -57,13 +74,19 @@ class Dexweb:
         if managed:
             # tdest is repository address, keep copy in .publish/
             work = os.path.join(root, '.publish')
-            if not os.path.isdir(os.path.join(work, '.git')):
-                code, out = self.run_git(root, 'clone', dest, work)
+            if os.path.isdir(work):
+                # an existing copy of another repository (dest or remote changed in config.json) is replaced
+                code, url = self.run_git(work, 'remote', 'get-url', remote)
+                if not os.path.isdir(os.path.join(work, '.git')) or code != 0 or url != dest:
+                    self.remove_publish_copy()
+            if not os.path.isdir(work):
+                code, out = self.run_git(root, 'clone', '-o', remote, dest, work)
                 if code != 0:
                     print('publish: could not clone ' + dest + '\n' + out)
                     return False
         else:
-            # dest local or absent:
+            # dest local or absent: .publish/ is not used
+            self.remove_publish_copy()
             work = os.path.join(root, dest or '.')
         code, top = self.run_git(work, 'rev-parse', '--show-toplevel')
         if code != 0 or os.path.realpath(top) != os.path.realpath(work):
@@ -77,14 +100,25 @@ class Dexweb:
                 print('publish: set "branch" in config.json "publish"')
                 return False
         if managed:
-            # the working copy is dexweb's own: bring it up to date before copying the site in
-            self.run_git(top, 'fetch', remote)
-            code, _ = self.run_git(top, 'rev-parse', '--verify', '--quiet', remote + '/' + branch)
+            # the copy is dexweb's own: make it match config.json's branch and the repository before copying the site in
+            code, out = self.run_git(top, 'fetch', remote)
+            if code != 0:
+                print('publish: could not fetch from ' + dest + '\n' + out)
+                return False
+            code, _ = self.run_git(top, 'rev-parse', '--verify', '--quiet', 'refs/remotes/' + remote + '/' + branch)
             if code == 0:
-                code, out = self.run_git(top, 'merge', '--ff-only', remote + '/' + branch)
-                if code != 0:
-                    print('publish: could not update .publish/ from ' + remote + '/' + branch + '\n' + out)
-                    return False
+                code, out = self.run_git(top, 'checkout', '-f', '-B', branch, remote + '/' + branch)
+            elif self.run_git(top, 'rev-parse', '--verify', '--quiet', 'HEAD')[0] == 0:
+                # a new branch, started from the repository's default branch
+                code, out = self.run_git(top, 'checkout', '-f', '-B', branch)
+            else:
+                # an empty repository
+                code, out = self.run_git(top, 'symbolic-ref', 'HEAD', 'refs/heads/' + branch)
+            if code != 0:
+                print('publish: could not prepare .publish/ for branch ' + branch + '\n' + out)
+                return False
+            # leftovers of an earlier publish that was not pushed
+            self.run_git(top, 'clean', '-f', '-d')
         # copy the site into the repository root (or "site_path", e.g. "docs"). Never deletes files there.
         site = os.path.normpath(os.path.join(top, p.get('site_path', '.')))
         os.makedirs(site, exist_ok=True)

@@ -4,7 +4,7 @@ build-backend = "hatchling.build"
 
 [project]
 name = "dexweb"
-version = "4.2.3"
+version = "4.2.4"
 dependencies = [
   "pypdf",
   "importlib_resources",
@@ -14,7 +14,7 @@ dependencies = [
 authors = [
   { name="Noorul Ali", email="manonthemoon13131@gmail.com" },
 ]
-description = "Dexweb makes dex, a programmatically generated website, to put on the web. Latest release: v4.2.3. Adds dex publishing with dexweb.Dexweb().publish()."
+description = "Dexweb makes dex, a programmatically generated website, to put on the web. Latest release: v4.2.4. Bug fix in dex publishing"
 readme = "README.md"
 requires-python = ">=3.8"
 classifiers = [
