@@ -1,4 +1,4 @@
-## DEXWEB v4.2.3
+## DEXWEB v4.2.4
 
 Dexweb builds you a dex to put on the web. Dexweb generates a website from PDF, Powerpoint, document, text, and JSON files.
 
@@ -22,6 +22,7 @@ Dependencies:
 
 ### Version Log:
 
+v4.2.4 - Fixes publishing bug where updated publishing destinations were not used. config.json is now source of truth over existing ./publish repository.
 v4.2.3 - Add publishing. Dex can be published to git repository or local folder to push web updates automatically.
 v4.2.0 - Adds The Matrix Dex as dex generated on blank dex name input\
 v4.1.9 - Fixed duplicate additions to existing page objects when adding new files in /to_add folder
